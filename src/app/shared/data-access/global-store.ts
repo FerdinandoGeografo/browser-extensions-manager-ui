@@ -1,0 +1,133 @@
+import { HttpClient } from '@angular/common/http';
+import {
+  computed,
+  DOCUMENT,
+  effect,
+  inject,
+  Injectable,
+  signal,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map, Subject, switchMap, take, tap } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GlobalStore {
+  #route = inject(ActivatedRoute);
+  #http = inject(HttpClient);
+  #document = inject(DOCUMENT);
+
+  #state = signal<GlobalState>({
+    ...initialState,
+    theme: window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light',
+  });
+
+  theme = computed(() => this.#state().theme);
+  loading = computed(() => this.#state().loading);
+  extensions = computed(() => this.#state().extensions);
+  filter = computed(() => this.#state().filter);
+
+  isDarkTheme = computed(() => this.#state().theme === 'dark');
+  filteredExtensions = computed(() =>
+    this.extensions().filter(
+      (e) => !this.filter() || e.isActive === this.filter()!.isActive
+    )
+  );
+
+  #loadExtensions = new Subject<void>();
+
+  constructor() {
+    effect(() => {
+      console.log(
+        'State Changed: \n',
+        this.#state(),
+        this.filteredExtensions()
+      );
+    });
+
+    effect(() =>
+      this.#document.body.classList.toggle('dark', this.isDarkTheme())
+    );
+
+    this.#loadExtensions
+      .pipe(
+        tap(() => this.#state.update((s) => ({ ...s, loading: true }))),
+        switchMap(() =>
+          this.#http.get<IExtensions[]>('data/data.json').pipe(
+            take(1),
+            tap(console.log),
+            tap((extensions) =>
+              this.#state.update((s) => ({ ...s, loading: false, extensions }))
+            )
+          )
+        )
+      )
+      .subscribe();
+
+    this.#loadExtensions.next();
+
+    this.#route.queryParams
+      .pipe(
+        map(({ isActive }) => {
+          if (isActive !== undefined) return isActive === 'true';
+          return isActive;
+        }),
+        tap((isActive) =>
+          this.setFilter(isActive === undefined ? isActive : { isActive })
+        )
+      )
+      .subscribe();
+  }
+
+  toggleTheme() {
+    this.#state.update((s) => ({
+      ...s,
+      theme: s.theme === 'light' ? 'dark' : 'light',
+    }));
+  }
+
+  removeExtension(name: IExtensions['name']) {
+    this.#state.update((s) => ({
+      ...s,
+      extensions: s.extensions.filter((e) => e.name !== name),
+    }));
+  }
+
+  toggleExtension(name: IExtensions['name']) {
+    this.#state.update((s) => ({
+      ...s,
+      extensions: s.extensions.map((e) =>
+        e.name === name ? { ...e, isActive: !e.isActive } : { ...e }
+      ),
+    }));
+  }
+
+  private setFilter(filter: GlobalState['filter']) {
+    this.#state.update((s) => ({ ...s, filter }));
+  }
+}
+
+export interface IExtensions {
+  logo: string;
+  name: string;
+  description: string;
+  isActive: boolean;
+}
+
+interface GlobalState {
+  theme: 'light' | 'dark';
+  loading: boolean;
+  extensions: IExtensions[];
+  filter?: {
+    isActive: boolean;
+  };
+}
+
+const initialState: GlobalState = {
+  theme: 'light',
+  loading: false,
+  extensions: [],
+};

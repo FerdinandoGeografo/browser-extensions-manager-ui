@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+@use "../public/scss/media-queries";
+@use "../public/scss/variables";
+@use "../public/scss/fonts";
+@use "../public/scss/base";
+@use "../public/scss/typography";
+
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$magenta-palette,
+      tertiary: mat.$violet-palette,
+    ),
+    typography: Noto Sans,
+    density: 0,
+  ));
+
+  /********* BUTTON *********/
+  @include mat.button-overrides((
+    filled-container-shape: var(--mat-sys-corner-full),
+    filled-horizontal-padding: 2rem,
+    filled-container-height: 4.6rem,
+    filled-container-color: light-dark(var(--neutral-0), var(--neutral-700)),
+    filled-focus-state-layer-opacity: 1,
+    filled-hover-state-layer-opacity: 1,
+    filled-pressed-state-layer-opacity: 1,
+    filled-state-layer-color: 1,
+    filled-ripple-color: transparent,
+    filled-label-text-color: light-dark(var(--neutral-900), var(--neutral-0)),
+    filled-label-text-size: 2rem,
+    filled-label-text-tracking: -.3px,
+    filled-label-text-weight: 400,
+    outlined-container-shape: var(--mat-sys-corner-full),
+    outlined-horizontal-padding: 1.6rem,
+    outlined-container-height: 3.8rem,
+    outlined-focus-state-layer-opacity: 1,
+    outlined-hover-state-layer-opacity: 1,
+    outlined-label-text-color: light-dark(var(--neutral-900), var(--neutral-0)),
+    outlined-outline-color: light-dark(var(--neutral-300), var(--neutral-600)),
+    outlined-pressed-state-layer-opacity: 1,
+    outlined-ripple-color: transparent,
+    outlined-state-layer-color: transparent,
+    outlined-label-text-size: 1.6rem,
+    outlined-label-text-tracking: -.5px,
+    outlined-label-text-weight: 500,
+  ));
+}
+
+body {
+  color-scheme: light;
+  margin: 0;
+  background: var(--light-gradient);
+
+  &.dark {
+    color-scheme: dark;
+    background: var(--dark-gradient);
+  }
+}
+
+html, body { height: 100%; }
