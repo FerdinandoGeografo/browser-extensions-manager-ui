@@ -60,13 +60,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
         background-color: light-dark(var(--neutral-0), var(--neutral-800));
         border-radius: 2rem;
         border: 1px solid light-dark(var(--neutral-200), var(--neutral-600));
-        box-shadow: 0 2px 2px light-dark(rgba(194, 206, 225, .2), transparent) ,0px 1px 5px 1px light-dark(rgba(194, 206, 225, .22), transparent);
+        box-shadow: 0 2px 2px light-dark(rgba(194, 206, 225, .2), transparent) , 0px 1px 5px 1px light-dark(rgba(194, 206, 225, .22), transparent);
         transition: all .35s ease-in-out;
 
         &__info {
           display: flex;
           align-items: start;
           gap: 1.6rem;
+          flex: 1;
         }
 
         &__details {

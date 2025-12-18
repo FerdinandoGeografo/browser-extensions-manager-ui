@@ -26,6 +26,10 @@ html {
   font-size: 10px;
 }
 
+html,body {
+  box-sizing: border-box;
+}
+
 ::-webkit-scrollbar {
   width: .8rem;
   height: .5rem;

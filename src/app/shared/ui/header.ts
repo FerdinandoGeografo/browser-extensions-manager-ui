@@ -13,7 +13,7 @@ import { GlobalStore } from '../data-access/global-store';
       <mat-toolbar class="header__toolbar">
         <app-logo />
 
-        <button matIconButton (click)="themeChanged.emit()">
+        <button matIconButton (click)="themeChanged.emit()" disableRipple>
           <mat-icon svgIcon="custom:{{ isDarkMode() ? 'sun' : 'moon' }}" />
         </button>
       </mat-toolbar>
@@ -25,10 +25,12 @@ import { GlobalStore } from '../data-access/global-store';
     :host {
       .header {
         &__toolbar {
+          transition-property: box-shadow, background-color;
+          transition-duration: .35s;
           justify-content: space-between;
           border-radius: 2rem;
           border: 1px solid light-dark(var(--neutral-200), transparent);
-          filter: drop-shadow(0 2px 3px light-dark(#d9e5f4, transparent));
+          box-shadow: 0 2px 3px light-dark(#d9e5f4, transparent);
 
           @include mat.toolbar-overrides((
             container-background-color: light-dark(var(--neutral-0), var(--neutral-800)),

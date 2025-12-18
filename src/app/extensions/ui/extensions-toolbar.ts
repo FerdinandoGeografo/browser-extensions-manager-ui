@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -11,30 +11,17 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       <span class="heading heading--2xl">Extensions List</span>
 
       <div class="extensions__filters">
+        @for (link of links(); track $index) {
         <a
           matButton="filled"
           routerLink="."
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
+          [queryParams]="link.filter"
         >
-          All
+          {{ link.label }}
         </a>
-        <a
-          matButton="filled"
-          routerLink="/"
-          routerLinkActive="active"
-          [queryParams]="{ isActive: true }"
-        >
-          Active
-        </a>
-        <a
-          matButton="filled"
-          routerLink="/"
-          routerLinkActive="active"
-          [queryParams]="{ isActive: false }"
-        >
-          Inactive
-        </a>
+        }
       </div>
     </mat-toolbar>
   `,
@@ -49,6 +36,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
           @include mat.toolbar-overrides((
             container-background-color: transparent,
+            container-text-color: light-dark(var(--neutral-900), var(--neutral-0)),
             standard-height: auto,
             mobile-height: auto,
           ));
@@ -63,4 +51,20 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     }
   `,
 })
-export class ExtensionsToolbar {}
+export class ExtensionsToolbar {
+  protected readonly links = signal<
+    { label: string; filter?: { isActive: boolean } }[]
+  >([
+    {
+      label: 'All',
+    },
+    {
+      label: 'Active',
+      filter: { isActive: true },
+    },
+    {
+      label: 'Inactive',
+      filter: { isActive: false },
+    },
+  ]);
+}

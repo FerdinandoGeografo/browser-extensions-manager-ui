@@ -5,6 +5,8 @@ body {
 
 
 .heading {
+  transition: color .35s;
+
   &--2xl {
     font-size: 3.4rem;
     font-weight: 700;

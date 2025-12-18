@@ -7,11 +7,6 @@ export const routes: Routes = [
       import('./extensions/extensions').then((c) => c.Extensions),
   },
   {
-    path: '',
-    redirectTo: 'extensions',
-    pathMatch: 'full',
-  },
-  {
     path: '**',
     redirectTo: 'extensions',
     pathMatch: 'full',
