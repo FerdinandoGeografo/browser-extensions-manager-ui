@@ -197,6 +197,7 @@ body {
   color-scheme: light;
   margin: 0;
   background: var(--light-gradient);
+  background-repeat: no-repeat;
 
   &.dark {
     color-scheme: dark;

@@ -26,6 +26,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     </mat-toolbar>
   `,
   styles: `
+    @use '../../../../public/scss/_media-queries.scss' as mixin;
     @use '@angular/material' as mat;
 
     :host {
@@ -46,6 +47,13 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
           display: flex;
           align-items: center;
           gap: 1.2rem;
+        }
+
+        @include mixin.respond(phone) {
+          &__toolbar {
+            flex-direction: column;
+            gap: 2.4rem;
+          }
         }
       }
     }

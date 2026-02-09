@@ -41,6 +41,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     </ul>
   `,
   styles: `
+    @use '../../../../public/scss/_media-queries.scss' as mixin;
     @use '@angular/material' as mat;
 
     :host {
@@ -49,11 +50,19 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 1.2rem;
+
+          @include mixin.respond(tablet) {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          @include mixin.respond(phone) {
+            grid-template-columns: 1fr;
+          }
         }
       }
 
       .extension {
-        padding: 2rem;
+        padding: 1.9rem;
         display: flex;
         flex-direction: column;
         gap: 4.6rem;
@@ -90,6 +99,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
           display: flex;
           align-items: center;
           justify-content: space-between;
+        }
+
+        @include mixin.respond(tablet) {
+          gap: 2.4rem;
         }
       }
     }

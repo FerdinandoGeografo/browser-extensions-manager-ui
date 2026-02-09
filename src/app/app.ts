@@ -18,11 +18,22 @@ import { GlobalStore } from './shared/data-access/global-store';
     </main>
   `,
   styles: `
+    @use '../../public/scss/_media-queries.scss' as mixin;
+
     :host {
       display: flex;
       flex-direction: column;
       gap: 7rem;
       padding: 4rem 13.5rem 6.4rem;
+
+      @include mixin.respond(tablet) {
+        gap: 4rem;
+        padding: 2.4rem 3.2rem 6.4rem;
+      }
+
+      @include mixin.respond(phone) {
+        padding: 2.4rem 1.6rem 6.4rem;
+      }
     }
   `,
 })
