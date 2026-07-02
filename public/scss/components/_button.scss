@@ -1,0 +1,149 @@
+@use '@angular/material' as mat;
+
+html {
+  .btn {
+    &--icon {
+      @include mat.icon-button-overrides((
+        icon-size: 2.2rem,
+        container-shape: 1.2rem,
+        touch-target-size: 5rem,
+        state-layer-size: 5rem,
+        state-layer-color: transparent,
+        hover-state-layer-opacity: 0,
+        focus-state-layer-opacity: 0,
+      ));
+
+      &.mat-mdc-icon-button {
+        transition: background-color .5s, box-shadow .5s;
+        background-color: light-dark(var(--neutral-100), var(--neutral-700));
+
+        .mat-icon {
+          width: var(--mat-icon-button-size);
+          height: var(--mat-icon-button-size);
+          display: flex;
+        }
+
+        &:hover {
+          background-color: light-dark(var(--neutral-300), var(--neutral-600));
+        }
+
+        &:focus {
+          background-color: light-dark(var(--neutral-100), var(--neutral-600));
+          box-shadow: 0 0 0 2px light-dark(var(--neutral-0),var(--neutral-800)), 0 0 0 4px var(--red-400);
+        }
+      }
+    }
+
+    &:not(.btn--icon) {
+      transition: all .5s;
+      border-width: 1px;
+      border-style: solid;
+
+      @include mat.button-overrides((
+        filled-focus-state-layer-opacity: 0,
+        filled-hover-state-layer-opacity: 0,
+        filled-pressed-state-layer-opacity: 0,
+        filled-state-layer-color: transparent,
+      ));
+    }
+
+    &--primary {
+      border-color: light-dark(var(--neutral-200), var(--neutral-600));
+
+      @include mat.button-overrides((
+        filled-horizontal-padding: 1.9rem,
+        filled-container-color: light-dark(var(--neutral-0), var(--neutral-700)),
+        filled-label-text-color: light-dark(var(--neutral-900), var(--neutral-0)),
+        filled-label-text-size: 2rem,
+        filled-label-text-tracking: -.3px,
+        filled-label-text-weight: 400,
+        filled-container-height: 4.6rem,
+        filled-touch-target-size: 4.6rem,
+      ));
+
+      &:not(:disabled) {
+        &:not(.active) {
+          box-shadow: 0 1px 2px 0 light-dark(rgb(184, 196, 215, .4), transparent);
+
+          &:hover {
+            box-shadow: none;
+            border-color: light-dark(rgba(214, 226, 245, .7), var(--neutral-600));
+
+            @include mat.button-overrides((
+              filled-container-color: light-dark(rgba(251, 253, 254, .7), var(--neutral-600)),
+              filled-label-text-color: light-dark(rgba(9, 20, 80, .7), var(--neutral-0)),
+            ));
+          }
+
+          &:focus {
+            border-color: light-dark(var(--neutral-0), var(--neutral-600));
+            box-shadow: 0 0 0 2px light-dark(var(--neutral-200), var(--neutral-900)), 0 0 0 4px var(--red-400);
+
+            @include mat.button-overrides((
+              filled-container-color: light-dark(var(--neutral-0), var(--neutral-600))
+            ));
+          }
+        }
+
+
+        &.active {
+          border-color: light-dark(var(--red-700), var(--red-400));
+
+          @include mat.button-overrides((
+            filled-container-color: light-dark(var(--red-700), var(--red-400)),
+            filled-label-text-color: light-dark(var(--neutral-0), var(--neutral-900)),
+          ));
+
+          &:hover {
+            border-color: var(--red-500);
+
+            @include mat.button-overrides((
+              filled-container-color: var(--red-500),
+            ));
+          }
+
+          &:focus {
+            box-shadow: 0 0 0 2px light-dark(var(--neutral-0), var(--neutral-900)), 0 0 0 4px var(--red-400);
+          }
+        }
+      }
+
+    }
+
+    &--secondary {
+      border-color: light-dark(var(--neutral-300), var(--neutral-600));
+
+      @include mat.button-overrides((
+        filled-horizontal-padding: 1.5rem,
+        filled-container-color: light-dark(var(--neutral-0), var(--neutral-800)),
+        filled-label-text-color: light-dark(var(--neutral-900), var(--neutral-0)),
+        filled-label-text-size: 1.6rem,
+        filled-label-text-tracking: -.5px,
+        filled-label-text-weight: 500,
+        filled-container-height: 3.8rem,
+        filled-touch-target-size: 3.8rem,
+      ));
+
+      &:not(:disabled) {
+        &:hover {
+          border-color: light-dark(var(--red-700), var(--red-400));
+
+          @include mat.button-overrides((
+            filled-container-color: light-dark(var(--red-700), var(--red-400)),
+            filled-label-text-color: light-dark(var(--neutral-0), var(--neutral-900))
+          ));
+        }
+
+        &:focus {
+          border-color: light-dark(var(--neutral-0), var(--neutral-600));
+          box-shadow: 0 0 0 2px light-dark(#fff, var(--neutral-900)), 0 0 0 4px light-dark(var(--red-700), var(--red-400));
+
+          @include mat.button-overrides((
+            filled-container-color: light-dark(var(--neutral-100), var(--neutral-600)),
+            filled-label-text-color: light-dark(var(--neutral-900), var(--neutral-0)),
+          ));
+        }
+      }
+    }
+  }
+}

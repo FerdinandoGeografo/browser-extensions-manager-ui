@@ -1,0 +1,72 @@
+@use '@angular/material' as mat;
+
+html {
+  --handle-shadow: 0 1px 3px 0 light-dark(rgba(10, 13, 18, .15), rgb(10, 13, 18, .1)), 0 1px 2px -1px light-dark(rgba(10, 13, 18, .15), rgb(9, 21, 64, .6));
+
+  .mat-mdc-slide-toggle, .mat-mdc-slide-toggle .mat-internal-form-field {
+    max-width: var(--mat-slide-toggle-track-width);
+  }
+
+  .mdc-switch__track {
+    transition: box-shadow .5s, background-color .5s;
+  }
+
+  .mat-mdc-slide-toggle .mdc-switch {
+     &:not(:disabled) {
+      &:focus {
+        .mdc-switch__track {
+          box-shadow: 0 0 0 2px light-dark(var(--neutral-0), var(--neutral-800)), 0 0 0 4px var(--red-400);
+        }
+      }
+    }
+  }
+}
+
+@include mat.slide-toggle-overrides((
+  track-width: 3.6rem,
+  track-height: 2rem,
+  track-outline-width: 0,
+  track-shape: var(--mat-sys-corner-full),
+  touch-target-size: 2rem,
+  pressed-handle-size: 1.6rem,
+  selected-handle-horizontal-margin: 0 0 0 -2px,
+  selected-pressed-handle-horizontal-margin: 0 0 0 -2px,
+  selected-track-outline-color: transparent,
+  selected-track-outline-width: 0px,
+  state-layer-size: 0,
+  selected-handle-size: 1.6rem,
+  unselected-handle-horizontal-margin: 0 0 0 2px,
+  unselected-pressed-handle-horizontal-margin: 0 0 0 2px,
+  unselected-handle-size: 1.6rem,
+  handle-width: 1.6rem,
+  handle-height: 1.6rem,
+  handle-surface-color: light-dark(var(--neutral-0), #fff),
+  handle-elevation-shadow: var(--handle-shadow),
+  handle-shape: 50%,
+  selected-focus-handle-color: light-dark(var(--neutral-0), #fff),
+  selected-focus-track-color: light-dark(var(--red-700), var(--red-400)),
+  selected-handle-color: light-dark(var(--neutral-0), #fff),
+  selected-hover-handle-color: light-dark(var(--neutral-0), #fff),
+  selected-hover-track-color: var(--red-500),
+  selected-pressed-handle-color: var(--neutral-0),
+  selected-pressed-track-color: light-dark(var(--red-700), var(--red-400)),
+  selected-track-color: light-dark(var(--red-700), var(--red-400)),
+  track-outline-color: transparent,
+  unselected-focus-handle-color: var(--neutral-0),
+  unselected-focus-track-color: light-dark(var(--neutral-300), var(--neutral-600)),
+  unselected-handle-color: var(--neutral-0),
+  unselected-hover-handle-color: var(--neutral-0),
+  unselected-hover-track-color: light-dark(var(--neutral-300), var(--neutral-600)),
+  unselected-pressed-handle-color: var(--neutral-0),
+  unselected-pressed-track-color: light-dark(var(--neutral-300), var(--neutral-600)),
+  unselected-track-color: light-dark(var(--neutral-300), var(--neutral-600)),
+  disabled-unselected-track-outline-color: transparent,
+  disabled-unselected-track-color: var(--neutral-100),
+  disabled-unselected-handle-color: #fafafa,
+  disabled-unselected-handle-opacity: 1,
+  disabled-unselected-track-outline-width: 0,
+  disabled-track-opacity: 1,
+  disabled-selected-handle-color: #fafafa,
+  disabled-selected-track-color: var(--neutral-100),
+  disabled-handle-elevation-shadow: var(--handle-shadow),
+));
