@@ -33,8 +33,8 @@ export class GlobalStore {
   isDarkTheme = computed(() => this.#state().theme === 'dark');
   filteredExtensions = computed(() =>
     this.extensions().filter(
-      (e) => !this.filter() || e.isActive === this.filter()!.isActive
-    )
+      (e) => !this.filter() || e.isActive === this.filter()!.isActive,
+    ),
   );
 
   #loadExtensions = new Subject<void>();
@@ -44,12 +44,12 @@ export class GlobalStore {
       console.log(
         'State Changed: \n',
         this.#state(),
-        this.filteredExtensions()
+        this.filteredExtensions(),
       );
     });
 
     effect(() =>
-      this.#document.body.classList.toggle('dark', this.isDarkTheme())
+      this.#document.body.classList.toggle('dark', this.isDarkTheme()),
     );
 
     this.#loadExtensions
@@ -58,12 +58,11 @@ export class GlobalStore {
         switchMap(() =>
           this.#http.get<IExtensions[]>('data/data.json').pipe(
             take(1),
-            tap(console.log),
             tap((extensions) =>
-              this.#state.update((s) => ({ ...s, loading: false, extensions }))
-            )
-          )
-        )
+              this.#state.update((s) => ({ ...s, loading: false, extensions })),
+            ),
+          ),
+        ),
       )
       .subscribe();
 
@@ -76,8 +75,8 @@ export class GlobalStore {
           return isActive;
         }),
         tap((isActive) =>
-          this.setFilter(isActive === undefined ? isActive : { isActive })
-        )
+          this.setFilter(isActive === undefined ? isActive : { isActive }),
+        ),
       )
       .subscribe();
   }
@@ -100,7 +99,7 @@ export class GlobalStore {
     this.#state.update((s) => ({
       ...s,
       extensions: s.extensions.map((e) =>
-        e.name === name ? { ...e, isActive: !e.isActive } : { ...e }
+        e.name === name ? { ...e, isActive: !e.isActive } : { ...e },
       ),
     }));
   }
@@ -121,13 +120,14 @@ interface GlobalState {
   theme: 'light' | 'dark';
   loading: boolean;
   extensions: IExtensions[];
-  filter?: {
+  filter: {
     isActive: boolean;
-  };
+  } | null;
 }
 
 const initialState: GlobalState = {
   theme: 'light',
   loading: false,
   extensions: [],
+  filter: null,
 };

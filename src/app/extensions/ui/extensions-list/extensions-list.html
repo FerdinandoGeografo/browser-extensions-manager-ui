@@ -1,0 +1,34 @@
+<ul class="extensions__list">
+  @for (extension of extensions(); track extension.name) {
+    <li class="extension">
+      <div class="extension__info">
+        <img
+          class="extension__icon"
+          [src]="extension.logo"
+          [alt]="extension.name + ' logo image'"
+        />
+
+        <div class="extension__details">
+          <p class="heading heading--xl">{{ extension.name }}</p>
+          <p class="heading heading--sm">{{ extension.description }}</p>
+        </div>
+      </div>
+      <div class="extension__actions">
+        <button
+          class="btn btn--secondary"
+          disableRipple
+          matButton="filled"
+          (click)="extensionRemoved.emit(extension.name)"
+        >
+          Remove
+        </button>
+
+        <mat-slide-toggle
+          hideIcon
+          [checked]="extension.isActive"
+          (change)="extensionToggled.emit(extension.name)"
+        />
+      </div>
+    </li>
+  }
+</ul>

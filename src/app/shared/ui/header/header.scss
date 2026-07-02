@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+
+:host {
+  .header {
+    &__toolbar {
+      transition: box-shadow .5s, background-color .5s;
+      justify-content: space-between;
+      border-radius: 2rem;
+      border: 1px solid light-dark(var(--neutral-200), transparent);
+      box-shadow: 0 2px 3px light-dark(#d9e5f4, transparent);
+
+      @include mat.toolbar-overrides((
+        container-background-color: light-dark(var(--neutral-0), var(--neutral-800)),
+        standard-height: 7.4rem,
+        mobile-height: 6.6rem,
+      ));
+    }
+  }
+}
