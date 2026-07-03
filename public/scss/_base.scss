@@ -21,6 +21,10 @@ img {
   display: block;
 }
 
+ul {
+  list-style-type: none;
+}
+
 html {
   font-size: 10px;
   box-sizing: border-box;
@@ -28,12 +32,26 @@ html {
 
 body {
   color-scheme: light;
-  background: var(--light-gradient);
-  background-repeat: no-repeat;
+  background: var(--light-gradient) no-repeat;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    background: var(--dark-gradient) no-repeat;
+    transition: opacity .5s ease-in-out;
+  }
 
   &.dark {
     color-scheme: dark;
-    background: var(--dark-gradient);
+
+    &::before {
+      opacity: 1;
+    }
   }
 }
 

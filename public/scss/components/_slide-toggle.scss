@@ -7,8 +7,10 @@ html {
     max-width: var(--mat-slide-toggle-track-width);
   }
 
-  .mdc-switch__track {
-    transition: box-shadow .5s, background-color .5s;
+  .mdc-switch--unselected .mdc-switch__track, .mdc-switch--selected .mdc-switch__track {
+    &::before, &::after {
+      transition: box-shadow .5s ease-in-out, background .5s ease-in-out;
+    }
   }
 
   .mat-mdc-slide-toggle .mdc-switch {

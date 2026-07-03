@@ -14,7 +14,7 @@ html {
       ));
 
       &.mat-mdc-icon-button {
-        transition: background-color .5s, box-shadow .5s;
+        transition: background-color .5s ease-in-out, box-shadow .5s ease-in-out;
         background-color: light-dark(var(--neutral-100), var(--neutral-700));
 
         .mat-icon {
@@ -35,7 +35,7 @@ html {
     }
 
     &:not(.btn--icon) {
-      transition: all .5s;
+      transition: all .5s ease-in-out;
       border-width: 1px;
       border-style: solid;
 

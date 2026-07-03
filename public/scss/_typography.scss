@@ -5,7 +5,7 @@ body {
 
 
 .heading {
-  transition: color .5s;
+  transition: color .5s ease-in-out;
 
   &--2xl {
     font-size: 3.4rem;
@@ -21,30 +21,9 @@ body {
     letter-spacing: -.2px;
   }
 
-  &--lg {
-    font-size: 2rem;
-    font-weight: 400;
-    line-height: 2.8rem;
-    letter-spacing: -.3px;
-  }
-
-  &--md {
-    font-size: 2rem;
-    font-weight: 500;
-    line-height: 2.8rem;
-    letter-spacing: -.3px;
-  }
-
   &--sm {
     font-size: 1.6rem;
     font-weight: 400;
-    line-height: 2.2rem;
-    letter-spacing: -.5px;
-  }
-
-  &--xs {
-    font-size: 1.6rem;
-    font-weight: 500;
     line-height: 2.2rem;
     letter-spacing: -.5px;
   }
