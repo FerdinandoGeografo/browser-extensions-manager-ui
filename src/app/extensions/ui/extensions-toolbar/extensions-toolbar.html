@@ -1,19 +1,20 @@
 <mat-toolbar class="extensions__toolbar">
   <span class="heading heading--2xl">Extensions List</span>
 
-  <div class="extensions__filters">
-    @for (link of links(); track $index) {
+  <nav class="extensions__filters" aria-label="Filter extensions">
+    @for (link of links; track $index) {
       <a
+        #rla="routerLinkActive"
         class="btn btn--primary"
         matButton="filled"
-        disableRipple
         routerLink="."
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         [queryParams]="link.filter"
+        [attr.aria-current]="rla.isActive ? 'page' : null"
       >
         {{ link.label }}
       </a>
     }
-  </div>
+  </nav>
 </mat-toolbar>

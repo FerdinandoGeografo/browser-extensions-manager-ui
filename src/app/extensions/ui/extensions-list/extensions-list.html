@@ -1,34 +1,44 @@
-<ul class="extensions__list">
-  @for (extension of extensions(); track extension.name) {
-    <li class="extension">
-      <div class="extension__info">
-        <img
-          class="extension__icon"
-          [src]="extension.logo"
-          [alt]="extension.name + ' logo image'"
-        />
+@if (!extensions().length) {
+  <p class="extensions__empty heading heading--xl">No extensions found</p>
+} @else {
+  <ul class="extensions__list">
+    @for (extension of extensions(); track extension.name) {
+      <li>
+        <mat-card class="extension" appearance="outlined">
+          <mat-card-content class="extension__content">
+            <div class="extension__info">
+              <img
+                [ngSrc]="extension.logo"
+                [alt]="extension.name + ' logo'"
+                width="60"
+                height="60"
+              />
 
-        <div class="extension__details">
-          <p class="heading heading--xl">{{ extension.name }}</p>
-          <p class="heading heading--sm">{{ extension.description }}</p>
-        </div>
-      </div>
-      <div class="extension__actions">
-        <button
-          class="btn btn--secondary"
-          disableRipple
-          matButton="filled"
-          (click)="extensionRemoved.emit(extension.name)"
-        >
-          Remove
-        </button>
+              <div class="extension__details">
+                <p class="heading heading--xl">{{ extension.name }}</p>
+                <p class="heading heading--sm">{{ extension.description }}</p>
+              </div>
+            </div>
+            <div class="extension__actions">
+              <button
+                class="btn btn--secondary"
+                matButton="filled"
+                aria-label="Confirm remove {{ extension.name }}"
+                (click)="extensionRemoved.emit(extension.name)"
+              >
+                Remove
+              </button>
 
-        <mat-slide-toggle
-          hideIcon
-          [checked]="extension.isActive"
-          (change)="extensionToggled.emit(extension.name)"
-        />
-      </div>
-    </li>
-  }
-</ul>
+              <mat-slide-toggle
+                hideIcon
+                [checked]="extension.isActive"
+                aria-label="Toggle {{ extension.name }}"
+                (change)="extensionToggled.emit(extension.name)"
+              />
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </li>
+    }
+  </ul>
+}

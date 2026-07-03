@@ -1,17 +1,25 @@
 import { Component, input, output } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { IExtensions } from '../../../shared/data-access/global-store';
+import { NgOptimizedImage } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { Extension } from '../../../shared/models/extension.model';
 
 @Component({
   selector: 'app-extensions-list',
-  imports: [MatButtonModule, MatSlideToggleModule],
+  imports: [
+    NgOptimizedImage,
+    MatButton,
+    MatSlideToggle,
+    MatCard,
+    MatCardContent,
+  ],
   templateUrl: './extensions-list.html',
   styleUrl: './extensions-list.scss',
 })
 export class ExtensionsList {
-  extensions = input.required<IExtensions[]>();
+  extensions = input.required<Extension[]>();
 
-  extensionRemoved = output<IExtensions['name']>();
-  extensionToggled = output<IExtensions['name']>();
+  extensionRemoved = output<Extension['name']>();
+  extensionToggled = output<Extension['name']>();
 }
