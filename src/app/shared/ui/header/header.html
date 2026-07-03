@@ -2,8 +2,13 @@
   <mat-toolbar class="header__toolbar">
     <app-logo />
 
-    <button class="btn btn--icon" matIconButton (click)="themeChanged.emit()">
-      <mat-icon svgIcon="custom:{{ isDarkMode() ? 'sun' : 'moon' }}" />
+    <button
+      class="btn btn--icon"
+      matIconButton
+      (click)="themeChanged.emit()"
+      aria-label="Toggle theme"
+    >
+      <mat-icon [svgIcon]="themeIcon()" />
     </button>
   </mat-toolbar>
 </header>

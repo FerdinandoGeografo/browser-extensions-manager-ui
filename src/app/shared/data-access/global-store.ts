@@ -8,7 +8,8 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, Subject, switchMap, take, tap } from 'rxjs';
+import { map, Subject, switchMap, tap } from 'rxjs';
+import { Extension, Filter } from '../models/extension.model';
 
 @Injectable({
   providedIn: 'root',
@@ -40,14 +41,6 @@ export class GlobalStore {
   #loadExtensions = new Subject<void>();
 
   constructor() {
-    effect(() => {
-      console.log(
-        'State Changed: \n',
-        this.#state(),
-        this.filteredExtensions(),
-      );
-    });
-
     effect(() =>
       this.#document.body.classList.toggle('dark', this.isDarkTheme()),
     );
@@ -56,10 +49,13 @@ export class GlobalStore {
       .pipe(
         tap(() => this.#state.update((s) => ({ ...s, loading: true }))),
         switchMap(() =>
-          this.#http.get<IExtensions[]>('data/data.json').pipe(
-            take(1),
+          this.#http.get<Extension[]>('data/data.json').pipe(
             tap((extensions) =>
-              this.#state.update((s) => ({ ...s, loading: false, extensions })),
+              this.#state.update((s) => ({
+                ...s,
+                loading: false,
+                extensions,
+              })),
             ),
           ),
         ),
@@ -71,12 +67,10 @@ export class GlobalStore {
     this.#route.queryParams
       .pipe(
         map(({ isActive }) => {
-          if (isActive !== undefined) return isActive === 'true';
-          return isActive;
+          if (!isActive) return null;
+          return { isActive: isActive === 'true' };
         }),
-        tap((isActive) =>
-          this.setFilter(isActive === undefined ? isActive : { isActive }),
-        ),
+        tap((isActive) => this.setFilter(isActive)),
       )
       .subscribe();
   }
@@ -88,14 +82,14 @@ export class GlobalStore {
     }));
   }
 
-  removeExtension(name: IExtensions['name']) {
+  removeExtension(name: Extension['name']) {
     this.#state.update((s) => ({
       ...s,
       extensions: s.extensions.filter((e) => e.name !== name),
     }));
   }
 
-  toggleExtension(name: IExtensions['name']) {
+  toggleExtension(name: Extension['name']) {
     this.#state.update((s) => ({
       ...s,
       extensions: s.extensions.map((e) =>
@@ -104,25 +98,16 @@ export class GlobalStore {
     }));
   }
 
-  private setFilter(filter: GlobalState['filter']) {
+  private setFilter(filter: Filter) {
     this.#state.update((s) => ({ ...s, filter }));
   }
-}
-
-export interface IExtensions {
-  logo: string;
-  name: string;
-  description: string;
-  isActive: boolean;
 }
 
 interface GlobalState {
   theme: 'light' | 'dark';
   loading: boolean;
-  extensions: IExtensions[];
-  filter: {
-    isActive: boolean;
-  } | null;
+  extensions: Extension[];
+  filter: Filter;
 }
 
 const initialState: GlobalState = {
