@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.dialog-overrides((
+    container-color: light-dark(var(--neutral-0), var(--neutral-800)),
+    container-shape: 2rem,
+    container-min-width: 40rem,
+    container-small-max-width: 32rem,
+    container-max-width: 40rem,
+    headline-padding: 3.2rem 3.2rem 1.6rem,
+    with-actions-content-padding: 0 3.2rem 2.4rem,
+    actions-padding: 0 3.2rem 2.4rem,
+    subhead-color: light-dark(var(--neutral-900), var(--neutral-0)),
+    subhead-size: 2.4rem,
+    subhead-line-height: 3rem,
+    subhead-weight: 700,
+    subhead-tracking: -.5px,
+    supporting-text-color: light-dark(var(--neutral-600), var(--neutral-300)),
+    supporting-text-size: 1.6rem,
+    supporting-text-line-height: 2.2rem,
+    supporting-text-weight: 400,
+    supporting-text-tracking: -.5px,
+  ));
+
+  .cdk-overlay-dark-backdrop {
+    background: rgba(0,0,0, .5);
+  }
+
+  .mat-mdc-dialog-surface::before {
+    border: 1px solid light-dark(var(--neutral-200), var(--neutral-600));
+  }
+
+  .mdc-dialog__title {
+    margin: 0;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .mdc-dialog__actions {
+    border: 0;
+  }
+}

@@ -1,4 +1,7 @@
-<app-header [isDarkMode]="gs.isDarkTheme()" (themeChanged)="gs.toggleTheme()" />
+<app-header
+  [isDarkTheme]="gs.isDarkTheme()"
+  (themeChanged)="gs.toggleTheme()"
+/>
 <main class="main">
   <router-outlet />
 </main>

@@ -93,7 +93,7 @@ export class GlobalStore {
     this.#state.update((s) => ({
       ...s,
       extensions: s.extensions.map((e) =>
-        e.name === name ? { ...e, isActive: !e.isActive } : { ...e },
+        e.name === name ? { ...e, isActive: !e.isActive } : e,
       ),
     }));
   }

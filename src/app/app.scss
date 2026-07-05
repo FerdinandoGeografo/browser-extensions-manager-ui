@@ -15,4 +15,10 @@
   @include mixin.respond(phone) {
     padding: 2.4rem 1.6rem 6.4rem;
   }
+
+  .main {
+    max-width: 144rem;
+    width: 100%;
+    margin-inline: auto;
+  }
 }

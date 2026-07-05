@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Confirm Deletion</h2>
+<mat-dialog-content>
+  <p>
+    Are you sure you want to remove the extension
+    <span class="extension">{{ extensionName }}</span> ?
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    class="btn btn--primary"
+    matButton="filled"
+    aria-label="Cancel deletion"
+    [mat-dialog-close]="false"
+  >
+    Cancel
+  </button>
+  <button
+    class="btn btn--primary"
+    matButton="filled"
+    aria-label="Remove {{ extensionName }}"
+    [mat-dialog-close]="true"
+  >
+    Delete
+  </button>
+</mat-dialog-actions>
