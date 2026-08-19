@@ -3,6 +3,9 @@
 html {
   .btn {
     &--icon {
+      opacity: 1;
+      transform: translateX(0);
+
       @include mat.icon-button-overrides((
         icon-size: 2.2rem,
         container-shape: 1.2rem,
@@ -13,8 +16,13 @@ html {
         focus-state-layer-opacity: 0,
       ));
 
+      @starting-style {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+
       &.mat-mdc-icon-button {
-        transition: background-color .5s ease-in-out, box-shadow .5s ease-in-out;
+        transition: background-color .5s ease-in-out, box-shadow .5s ease-in-out, opacity .75s ease-in-out, transform .75s ease-in-out;
         background-color: light-dark(var(--neutral-100), var(--neutral-700));
 
         .mat-icon {
@@ -36,6 +44,7 @@ html {
 
     &:not(.btn--icon) {
       transition: all .5s ease-in-out;
+      transition-delay: calc(var(--diff, 1) * .15s);
       border-width: 1px;
       border-style: solid;
 
@@ -48,6 +57,8 @@ html {
     }
 
     &--primary {
+      opacity: 1;
+      transform: translateY(0);
       border-color: light-dark(var(--neutral-200), var(--neutral-600));
 
       @include mat.button-overrides((
@@ -108,6 +119,10 @@ html {
         }
       }
 
+      @starting-style {
+        opacity: 0;
+        transform: translateY(-1rem);
+      }
     }
 
     &--secondary {
@@ -142,6 +157,40 @@ html {
             filled-container-color: light-dark(var(--neutral-100), var(--neutral-600)),
             filled-label-text-color: light-dark(var(--neutral-900), var(--neutral-0)),
           ));
+        }
+      }
+    }
+
+    &--danger {
+      @include mat.button-overrides((
+        filled-horizontal-padding: 1.9rem,
+        filled-container-color: light-dark(var(--red-700), var(--red-400)),
+        filled-label-text-color: light-dark(var(--neutral-0), var(--neutral-900)),
+        filled-label-text-size: 2rem,
+        filled-label-text-tracking: -.3px,
+        filled-label-text-weight: 400,
+        filled-container-height: 4.6rem,
+        filled-touch-target-size: 4.6rem,
+      ));
+
+      &:not(:disabled) {
+        border-color: light-dark(var(--red-700), var(--red-400));
+
+        @include mat.button-overrides((
+          filled-container-color: light-dark(var(--red-700), var(--red-400)),
+          filled-label-text-color: light-dark(var(--neutral-0), var(--neutral-900)),
+        ));
+
+        &:hover {
+          border-color: var(--red-500);
+
+          @include mat.button-overrides((
+            filled-container-color: var(--red-500),
+          ));
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 2px light-dark(var(--neutral-0), var(--neutral-900)), 0 0 0 4px var(--red-400);
         }
       }
     }
