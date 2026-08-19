@@ -1,13 +1,13 @@
-export interface Extension {
+export type Extension = {
   logo: string;
   name: string;
   description: string;
   isActive: boolean;
-}
+};
 
 export type Filter = { isActive: boolean } | null;
 
-export interface ExtensionFilter {
+export type ExtensionFilter = {
   label: string;
   filter: Filter;
-}
+};

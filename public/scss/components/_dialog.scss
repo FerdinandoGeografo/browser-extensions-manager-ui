@@ -1,3 +1,4 @@
+@use '../media-queries' as *;
 @use '@angular/material' as mat;
 
 html {
@@ -5,7 +6,7 @@ html {
     container-color: light-dark(var(--neutral-0), var(--neutral-800)),
     container-shape: 2rem,
     container-min-width: 40rem,
-    container-small-max-width: 32rem,
+    container-small-max-width: 100%,
     container-max-width: 40rem,
     headline-padding: 3.2rem 3.2rem 1.6rem,
     with-actions-content-padding: 0 3.2rem 2.4rem,
@@ -40,5 +41,15 @@ html {
 
   .mdc-dialog__actions {
     border: 0;
+  }
+
+  @include respond(phone) {
+    @include mat.dialog-overrides((
+      container-min-width: auto,
+    ));
+
+    .mdc-dialog__surface {
+      width: calc(100% - 3.2rem);
+    }
   }
 }

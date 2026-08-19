@@ -8,7 +8,7 @@ html {
   }
 
   .mdc-switch--unselected .mdc-switch__track, .mdc-switch--selected .mdc-switch__track {
-    &::before, &::after {
+    &, &::before, &::after {
       transition: box-shadow .5s ease-in-out, background .5s ease-in-out;
     }
   }
