@@ -1,10 +1,20 @@
 @if (!extensions().length) {
-  <p class="extensions__empty heading heading--xl">No extensions found</p>
+  <p
+    class="extensions__empty heading heading--xl"
+    animate.enter="extensions__empty-enter"
+  >
+    No extensions found
+  </p>
 } @else {
   <ul class="extensions__list">
     @for (extension of extensions(); track extension.name) {
-      <li>
-        <mat-card class="extension" appearance="outlined">
+      <li animate.leave="extension-leave">
+        <mat-card
+          class="extension"
+          appearance="outlined"
+          [style.--index]="$index"
+          animate.enter="extension-enter"
+        >
           <mat-card-content class="extension__content">
             <div class="extension__info">
               <img

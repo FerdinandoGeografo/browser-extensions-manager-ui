@@ -5,16 +5,8 @@
   .extensions {
     &__list {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(34.3rem, 1fr));
       gap: 1.2rem;
-
-      @include mixin.respond(tablet) {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      @include mixin.respond(phone) {
-        grid-template-columns: 1fr;
-      }
     }
 
     &__empty {
@@ -22,10 +14,17 @@
       justify-content: center;
       color: light-dark(var(--neutral-900), var(--neutral-0));
       font-weight: 500;
+      padding-block: 2.4rem;
+    }
+
+    &__empty-enter {
+      animation: fade-in .3s ease-out;
     }
   }
 
   .extension {
+    transition: box-shadow .5s ease-in-out, background-color .5s ease-in-out, border-color .5s ease-in-out;
+
     --extension-elevation: 0 2px 2px light-dark(rgba(194, 206, 225, .2), transparent) , 0px 1px 5px 1px light-dark(rgba(194, 206, 225, .22), transparent);
     @include mat.card-overrides((
       outlined-container-shape: 2rem,
@@ -35,7 +34,11 @@
       outlined-container-elevation: var(--extension-elevation),
     ));
     min-height: 20rem;
-    transition: all .5s ease-in-out;
+
+    &.extension-enter {
+      animation: fade-in .35s ease-out both;
+      animation-delay: calc(var(--index, 0) * 75ms);
+    }
 
     &__content {
       padding: 1.9rem;
@@ -70,5 +73,9 @@
       align-items: center;
       justify-content: space-between;
     }
+  }
+
+  li.extension-leave {
+    animation: fade-out .3s ease-in forwards;
   }
 }

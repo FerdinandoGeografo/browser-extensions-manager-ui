@@ -44,9 +44,14 @@ html {
 
     &:not(.btn--icon) {
       transition: all .5s ease-in-out;
-      transition-delay: calc(var(--diff, 1) * .15s);
+
       border-width: 1px;
       border-style: solid;
+
+      &.btn-enter {
+        animation: fade-in .45s ease-out both;
+        animation-delay: calc(var(--index, 1) * 100ms);
+      }
 
       @include mat.button-overrides((
         filled-focus-state-layer-opacity: 0,
@@ -57,8 +62,6 @@ html {
     }
 
     &--primary {
-      opacity: 1;
-      transform: translateY(0);
       border-color: light-dark(var(--neutral-200), var(--neutral-600));
 
       @include mat.button-overrides((
@@ -117,11 +120,6 @@ html {
             box-shadow: 0 0 0 2px light-dark(var(--neutral-0), var(--neutral-900)), 0 0 0 4px var(--red-400);
           }
         }
-      }
-
-      @starting-style {
-        opacity: 0;
-        transform: translateY(-1rem);
       }
     }
 

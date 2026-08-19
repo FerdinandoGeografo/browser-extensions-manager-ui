@@ -11,6 +11,7 @@
     matButton="filled"
     aria-label="Cancel deletion"
     [mat-dialog-close]="false"
+    animate.enter="btn-enter"
   >
     Cancel
   </button>
@@ -19,6 +20,7 @@
     matButton="filled"
     aria-label="Remove {{ extensionName }}"
     [mat-dialog-close]="true"
+    animate.enter="btn-enter"
   >
     Delete
   </button>

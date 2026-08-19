@@ -1,13 +1,12 @@
-import { Component, computed, effect, inject, input } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { ExtensionsToolbar } from './ui/extensions-toolbar/extensions-toolbar';
 import { ExtensionsList } from './ui/extensions-list/extensions-list';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModal } from './ui/confirm-modal/confirm-modal';
-import { Extension, Filter } from '../shared/models/extension.model';
-import { map, take, tap } from 'rxjs/operators';
+import { Extension } from '../shared/models/extension.model';
+import { take } from 'rxjs/operators';
 import { ExtensionsStore } from './data-access/extensions-store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-extensions',
@@ -16,6 +15,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './extensions.scss',
 })
 export class Extensions {
+  readonly #route = inject(ActivatedRoute);
   readonly #router = inject(Router);
   readonly #dialog = inject(MatDialog);
   protected readonly extStore = inject(ExtensionsStore);
@@ -35,7 +35,8 @@ export class Extensions {
         return;
       }
 
-      this.#router.navigate([''], {
+      this.#router.navigate([], {
+        relativeTo: this.#route,
         replaceUrl: true,
       });
     });

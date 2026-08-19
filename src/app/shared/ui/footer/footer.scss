@@ -7,6 +7,10 @@
     justify-content: center;
     gap: .6rem;
 
+    &__enter {
+      animation: fade-in .35s ease-out both;
+    }
+
     &__text {
       display: contents;
       color: light-dark(var(--neutral-900), var(--neutral-0));

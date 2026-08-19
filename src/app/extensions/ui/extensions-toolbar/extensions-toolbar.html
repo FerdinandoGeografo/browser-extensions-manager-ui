@@ -2,16 +2,19 @@
   <span class="heading heading--2xl">Extensions List</span>
 
   <nav class="extensions__filters" aria-label="Filter extensions">
-    @for (link of links; track $index) {
+    @for (link of links; track link.label) {
       <a
         #rla="routerLinkActive"
         class="btn btn--primary"
+        [style.--index]="$index"
         matButton="filled"
         routerLink="."
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         [queryParams]="link.filter"
+        aria-label="See {{ link.label }} extensions"
         [attr.aria-current]="rla.isActive ? 'page' : null"
+        animate.enter="btn-enter"
       >
         {{ link.label }}
       </a>
