@@ -1,5 +1,43 @@
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+:host {
+  margin-top: auto;
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+
+    &__text {
+      display: contents;
+      color: light-dark(var(--neutral-900), var(--neutral-0));
+    }
+
+    &__link {
+      &:link, &:visited {
+        font-weight: 700;
+        text-decoration: none;
+        outline: 0 none;
+        color: light-dark(var(--red-700), var(--red-400));;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          height: 1px;
+          background-color: currentColor;
+          bottom: -1px;
+          inset-inline: 0;
+          transform: scaleX(0);
+          transition: transform .35s ease-in-out;
+        }
+      }
+
+      &:hover, &:active, &:focus {
+        &::after {
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
 }
+

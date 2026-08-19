@@ -1,5 +1,14 @@
 :host {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all .75s ease-in-out;
+
   path {
     transition: fill .5s ease-in-out;
+  }
+
+  @starting-style {
+    opacity: 0;
+    transform: translateX(-100%);
   }
 }

@@ -4,10 +4,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { RouterOutlet } from '@angular/router';
 import { GlobalStore } from './shared/data-access/global-store';
 import { Header } from './shared/ui/header/header';
+import { Footer } from './shared/ui/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [Header, RouterOutlet],
+  imports: [RouterOutlet, Header, Footer],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

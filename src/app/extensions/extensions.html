@@ -1,6 +1,6 @@
 <app-extensions-toolbar />
 <app-extensions-list
-  [extensions]="gs.filteredExtensions()"
+  [extensions]="extStore.filteredExtensions()"
   (extensionRemoved)="openConfirmModal($event)"
-  (extensionToggled)="gs.toggleExtension($event)"
+  (extensionToggled)="extStore.toggleExtension($event)"
 />
