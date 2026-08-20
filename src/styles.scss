@@ -11,6 +11,13 @@
 
 @use '@angular/material' as mat;
 
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
+}
+
 html {
   @include mat.theme((
     color: (
@@ -20,11 +27,4 @@ html {
     typography: Noto Sans,
     density: 0,
   ));
-
-  *,
-  *::before,
-  *::after {
-  animation: none !important;
-  transition: none !important;
-}
 }
