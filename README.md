@@ -11,7 +11,10 @@ This is a solution to the [Browser extensions manager UI challenge on Frontend M
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
+    - [Project structure](#project-structure)
+    - [State management with Signals](#state-management-with-signals)
+    - [Animations](#animations)
+    - [Extra features](#extra-features)
   - [Useful resources](#useful-resources)
 - [Author](#author)
 
@@ -30,12 +33,13 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![Light Mode](screenshots/light.png)
+![Dark Mode](screenshots/dar.png)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [GitHub Repository](https://github.com/FerdinandoGeografo/browser-extensions-manager-ui)
+- Live Site URL: [Browser Extension Manager UI](https://extensions-manager-ui-fg.netlify.app/)
 
 ## My process
 
@@ -43,27 +47,85 @@ Users should be able to:
 
 - Semantic HTML5 markup
 - CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+- Desktop-first workflow
+- [TypeScript](https://www.typescriptlang.org/) - JS superset
+- [Angular (v22)](https://angular.dev/) - Frontend Typescript Framework
+- [Angular Material & CDK](https://material.angular.dev/) - UI Components libraries
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+For this challenge I tried out the newest major version 22 of `Angular`, whic has made the developer experience noticeably leaner and more concise by drastically reducing boilerplate code.
 
-To see how you can add code snippets, see below:
+#### Project structure
 
-### Continued development
+I followed my usual folder organization: each top-level folder under `app/` represents a **feature**, implemented as a routed component declared in `app.routes`. While this specific challenge only required a single feature (`extensions`), I still kept a `shared` folder to host functionality that could be reused across other features if the app were to grow.
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+Each feature folder contains its own routed "smart" component and follows the same internal convention:
+
+- `data-access` — business logic and state management, exposed through one or more services (stores).
+- `ui` — "dumb", purely presentational components that receive data via inputs and communicate back via outputs.
+- `models` — type and interface definitions for that feature.
+
+#### State management with Signals
+
+I did get real hands-on practice applying a clean, consistent structure that keeps both smart and dumb components thin on business logic.
+Instead, logic and state live in dedicated store services, built entirely with `signal`, `computed`, and `effect` — no NgRx or other external state library was needed for a feature of this size.
+
+One useful lesson that came out while developing this: **`effect` should be the last resort, not the default tool**. I reserved it strictly for genuine side effects, and let `computed` handle every purely derived value.
+
+A concrete example of this is how extension filtering works. The **URL query param is the single source of truth** for the active filter — this keeps it bookmarkable and shareable, and survives a page refresh for free.
+The store itself stays routing-agnostic: it just exposes a plain `filter` signal and a `setFilter()` method, and derives `filteredExtensions` from it with a `computed`:
+
+```ts
+...
+filter = computed(() => this.#state().filter);
+
+filteredExtensions = computed(() =>
+  this.extensions().filter(
+    (e) => !this.filter() || e.isActive === this.filter()?.isActive,
+  ),
+);
+
+setFilter(filter: Filter) {
+  this.#state.update((s) => ({ ...s, filter }));
+}
+```
+
+The routed `Extensions` component is the only piece that knows about the URL. Thanks to `withComponentInputBinding()`, the `isActive` query param is bound directly as a component input, and an `effect` translates it into a call to `setFilter()` — falling back to a URL correction if the param is malformed:
+
+```ts
+readonly isActive = input<string>();
+
+constructor() {
+  effect(() => {
+    const isActive = this.isActive();
+    if (isActive === undefined) return this.extStore.setFilter(null);
+    if (isActive === 'true' || isActive === 'false') {
+      return this.extStore.setFilter({ isActive: isActive === 'true' });
+    }
+    this.#router.navigate([], { relativeTo: this.#route, replaceUrl: true });
+  });
+}
+```
+
+It might look like the filter is duplicated between the URL and the store, but it isn't redundant: the store needs its own signal to derive `filteredExtensions` internally, while staying decoupled from `Router`/`ActivatedRoute` — it doesn't care _how_ the filter is set, only that it's set.
+That decision is left entirely to whoever consumes the store, which in this case is the routed component reading the URL.
+
+#### Animations
+
+Angular's animation story has changed significantly in recent versions, moving away from the dedicated `@angular/animations` package in favor of plain CSS/SCSS, paired with the new `animate.enter` / `animate.leave` template API.
+I used this to add staggered enter animations for the filter buttons and the extension cards, plus a leave animation when removing an extension.
+
+#### Extra features
+
+To make the challenge a bit more interesting, I added a couple of things that weren't strictly required: a confirmation modal before deleting an extension, and the animations described above.
+
+Given the scope of the challenge, the data is purely mock data read from the provided static JSON file — no real backend involved.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [CSS Animations](https://codepen.io/nelledejones/pen/gOOPWrK)
+  Provides nice examples of keyframes and animations to grasp quickly.
 
 ## Author
 
