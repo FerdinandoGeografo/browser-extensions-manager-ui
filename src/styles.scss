@@ -20,4 +20,11 @@ html {
     typography: Noto Sans,
     density: 0,
   ));
+
+  *,
+  *::before,
+  *::after {
+  animation: none !important;
+  transition: none !important;
+}
 }
