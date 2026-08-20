@@ -16,7 +16,7 @@ bootstrapApplication(App, {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(),
   ],
 }).catch((err) => console.error(err));
