@@ -34,7 +34,7 @@ Users should be able to:
 ### Screenshot
 
 ![Light Mode](screenshots/light.png)
-![Dark Mode](screenshots/dar.png)
+![Dark Mode](screenshots/dark.png)
 
 ### Links
 
