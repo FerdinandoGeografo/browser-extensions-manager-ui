@@ -11,12 +11,6 @@
 
 @use '@angular/material' as mat;
 
-*,
-*::before,
-*::after {
-  animation: none !important;
-  transition: none !important;
-}
 
 html {
   @include mat.theme((
