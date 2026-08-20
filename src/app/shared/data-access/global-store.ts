@@ -15,7 +15,7 @@ export class GlobalStore {
     ...initialState,
     theme: window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
-      : 'light',
+      : 'dark',
   });
 
   theme = computed(() => this.#state().theme);
