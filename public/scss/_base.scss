@@ -28,12 +28,14 @@ ul {
 html {
   font-size: 10px;
   box-sizing: border-box;
+  min-height: 100%;
 }
 
 body {
   color-scheme: light;
   background: var(--light-gradient) no-repeat;
   position: relative;
+  min-height: 100vh;
 
   &:before {
     content: "";
